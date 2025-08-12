@@ -1,0 +1,164 @@
+You are building a comprehensive K-12 School Communication Platform called "SchoolConnect" using Laravel 12, Blade templates, and Tailwind CSS v4. This is a multi-tenant SaaS application that serves schools, teachers, administrators, and parents.
+
+## PROJECT OVERVIEW
+**Platform Purpose:** Unified school communication, attendance, grades, forms, and student progression tracking
+**Target Users:** K-12 Schools (tenants), Teachers, Administrators, Parents
+**Business Model:** SaaS subscription with role-based access
+**Key Differentiator:** Parent-first design with comprehensive school operations
+
+## TECHNICAL REQUIREMENTS
+- **Backend:** Laravel 12.x, PHP 8.2+, MySQL 8.0+
+- **Frontend:** Blade templates, Tailwind CSS v4, Alpine.js for interactivity
+- **Architecture:** Multi-tenant using stancl/tenancy package
+- **Authentication:** Laravel Breeze/Jetstream with role-based permissions
+- **Database:** InnoDB, utf8mb4, proper indexing, soft deletes where appropriate
+- **Security:** CSRF protection, XSS prevention, SQL injection protection, tenant isolation
+
+## DELIVERABLES REQUIRED
+
+### A) COMPLETE DATABASE SCHEMA (MySQL 8.0+)
+Create all tables with proper relationships, indexes, and constraints:
+
+**Core Tables:**
+1. `tenants` - School organizations
+2. `schools` - School details per tenant
+3. `users` - All users (teachers, admins, parents)
+4. `roles` & `role_user` - Role management
+5. `parents_students` - Parent-child relationships
+6. `classrooms` - Class information
+7. `enrollments` - Student-class relationships
+
+**Feature Tables:**
+8. `announcements` & `announcement_audiences` - School communications
+9. `attendance_records` - Daily attendance tracking
+10. `conversations`, `messages`, `message_reads` - Messaging system
+11. `grade_categories`, `assignments`, `assignment_scores` - Grading system
+12. `form_requests` & `form_approvals` - Early pickup/sick leave forms
+13. `progression_snapshots` & `progression_milestones` - Student progress
+14. `subscriptions`, `invoices`, `payments` - Billing system
+15. `audit_logs` - Security audit trail
+
+**Requirements:**
+- All tables must include `tenant_id` for multi-tenancy
+- Proper foreign key constraints with CASCADE where safe
+- Composite indexes for common queries (tenant_id + other filters)
+- Soft deletes for user data, hard deletes for operational data
+- Timestamps (created_at, updated_at) on all tables
+- Proper ENUMs for status fields
+- JSON columns for flexible data storage where appropriate
+
+### B) COMPLETE WEB PAGES (15 total)
+
+#### **Public Pages:**
+1. **Landing Page** (`/`) - Marketing page with features, benefits, waitlist signup
+2. **System Overview** (`/system-overview`) - Technical overview for stakeholders
+3. **Authentication Pages** - Login, register, password reset
+
+#### **Role-Based Dashboards:**
+4. **Admin Dashboard** (`/dashboard`) - School overview, analytics, user management
+5. **Teacher Dashboard** (`/dashboard`) - Class overview, quick actions, recent activity
+6. **Parent Dashboard** (`/dashboard`) - Child overview, announcements, grades
+
+#### **Feature Pages:**
+7. **Announcements** (`/announcements`) - Create, manage, view school communications
+8. **Attendance** (`/attendance`) - Mark, view, and report on student attendance
+9. **Messaging** (`/messages`) - Direct and group conversations between users
+10. **Grades** (`/grades`) - Assignment creation, grading, and report cards
+11. **Forms & Requests** (`/forms`) - Early pickup and sick leave submissions
+12. **Student Progression** (`/progression`) - Progress tracking and analytics
+13. **Billing** (`/billing`) - Subscription management and invoices
+14. **User Management** (`/users`) - User administration and role assignment
+15. **Settings** (`/settings`) - Profile, preferences, and system settings
+
+## PAGE REQUIREMENTS
+
+### **Landing Page Features:**
+- Hero section with clear value proposition
+- Feature showcase (6 main features with icons)
+- Target audience sections (Teachers, Admins, Parents)
+- Security & compliance highlights
+- FAQ section
+- Waitlist signup form
+- Mobile-responsive design
+
+### **Dashboard Requirements:**
+- Role-based content and permissions
+- Quick action buttons
+- Recent activity feeds
+- Notification center
+- Responsive card-based layout
+- Real-time updates where appropriate
+
+### **Feature Page Requirements:**
+- CRUD operations with proper validation
+- Search and filtering capabilities
+- Export functionality (PDF/CSV)
+- Mobile-responsive forms
+- Real-time notifications
+- Audit logging for sensitive operations
+
+## DESIGN REQUIREMENTS
+- **Color Scheme:** Professional, education-focused palette
+- **Typography:** Clear, readable fonts (Inter or similar)
+- **Layout:** Clean, organized, intuitive navigation
+- **Responsiveness:** Mobile-first design approach
+- **Accessibility:** WCAG 2.1 AA compliance
+- **Performance:** Fast loading times, optimized queries
+
+## FUNCTIONAL REQUIREMENTS
+- **Multi-tenancy:** Complete data isolation between schools
+- **Role-based Access:** Granular permissions per user role
+- **Real-time Updates:** Live notifications and status changes
+- **Data Export:** PDF and CSV export capabilities
+- **File Uploads:** Secure file handling for documents and images
+- **Search & Filter:** Advanced search across all major entities
+- **Audit Trail:** Complete logging of user actions
+- **API Endpoints:** RESTful API for mobile app integration
+
+## SECURITY REQUIREMENTS
+- **Authentication:** Secure login with rate limiting
+- **Authorization:** Role-based access control (RBAC)
+- **Data Protection:** Encryption at rest and in transit
+- **Tenant Isolation:** No cross-tenant data access possible
+- **Input Validation:** Comprehensive validation and sanitization
+- **CSRF Protection:** Cross-site request forgery prevention
+- **XSS Prevention:** Output encoding and content security policies
+
+## TESTING REQUIREMENTS
+- **Unit Tests:** Core business logic and services
+- **Feature Tests:** User workflows and integrations
+- **Browser Tests:** End-to-end user journeys (Laravel Dusk)
+- **Performance Tests:** Load testing for concurrent users
+- **Security Tests:** Vulnerability scanning and penetration testing
+
+## DEPLOYMENT REQUIREMENTS
+- **Environment:** Production-ready with proper error handling
+- **Monitoring:** Application and database performance monitoring
+- **Backup:** Automated database and file backups
+- **SSL:** HTTPS enforcement for all pages
+- **Caching:** Redis for session and query caching
+- **Queue System:** Background job processing for notifications
+
+## ACCEPTANCE CRITERIA
+- All 15 pages render correctly with proper styling
+- Multi-tenant isolation works perfectly
+- Role-based permissions function correctly
+- All CRUD operations work as expected
+- Mobile responsiveness on all devices
+- Performance meets requirements (<3s page load)
+- Security requirements are fully implemented
+- Database schema supports all features efficiently
+
+## DELIVERABLES FORMAT
+1. **Complete SQL Schema** - All CREATE TABLE statements in proper order
+2. **All Blade Templates** - 15 complete .blade.php files
+3. **Routes File** - Complete web.php with all routes
+4. **Controllers** - All necessary controller classes
+5. **Models** - Eloquent models with relationships
+6. **Services** - Business logic service classes
+7. **Middleware** - Authentication and authorization middleware
+8. **Database Migrations** - Laravel migration files
+9. **Seeders** - Sample data for testing
+10. **Configuration Files** - Any additional config needed
+
+Please provide complete, production-ready code that can be immediately deployed and tested. Ensure all security best practices are followed and the multi-tenant architecture is properly implemented.

@@ -150,11 +150,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Protected routes
-  app.use('/api', authenticateToken, extractTenant);
+  // Apply authentication and tenant middleware to protected routes only
+  const protectedMiddleware = [authenticateToken, extractTenant];
 
   // Dashboard stats
-  app.get('/api/dashboard/stats', async (req: any, res) => {
+  app.get('/api/dashboard/stats', protectedMiddleware, async (req: any, res) => {
     try {
       const stats = await storage.getDashboardStats(req.tenant.id);
       res.json(stats);
@@ -165,7 +165,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Announcements
-  app.get('/api/announcements', async (req: any, res) => {
+  app.get('/api/announcements', protectedMiddleware, async (req: any, res) => {
     try {
       const announcements = await storage.getAnnouncements(req.tenant.id);
       res.json(announcements);
@@ -175,7 +175,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/announcements', async (req: any, res) => {
+  app.post('/api/announcements', protectedMiddleware, async (req: any, res) => {
     try {
       const announcementData = insertAnnouncementSchema.parse({
         ...req.body,
@@ -191,7 +191,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/announcements/:id', async (req: any, res) => {
+  app.put('/api/announcements/:id', protectedMiddleware, async (req: any, res) => {
     try {
       const { id } = req.params;
       const updateData = req.body;
@@ -204,7 +204,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete('/api/announcements/:id', async (req: any, res) => {
+  app.delete('/api/announcements/:id', protectedMiddleware, async (req: any, res) => {
     try {
       const { id } = req.params;
       await storage.deleteAnnouncement(id, req.tenant.id);
@@ -216,7 +216,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Attendance
-  app.get('/api/attendance', async (req: any, res) => {
+  app.get('/api/attendance', protectedMiddleware, async (req: any, res) => {
     try {
       const { date } = req.query;
       const attendanceRecords = await storage.getAttendanceByDate(date || new Date().toISOString().split('T')[0], req.tenant.id);
@@ -227,7 +227,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/attendance', async (req: any, res) => {
+  app.post('/api/attendance', protectedMiddleware, async (req: any, res) => {
     try {
       const attendanceData = insertAttendanceSchema.parse({
         ...req.body,
@@ -244,7 +244,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Students
-  app.get('/api/students', async (req: any, res) => {
+  app.get('/api/students', protectedMiddleware, async (req: any, res) => {
     try {
       let students;
       
@@ -271,7 +271,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Messaging
-  app.get('/api/conversations', async (req: any, res) => {
+  app.get('/api/conversations', protectedMiddleware, async (req: any, res) => {
     try {
       const conversations = await storage.getConversationsByUser(req.user.userId, req.tenant.id);
       res.json(conversations);
@@ -281,7 +281,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/conversations', async (req: any, res) => {
+  app.post('/api/conversations', protectedMiddleware, async (req: any, res) => {
     try {
       const { title, participantIds } = req.body;
       const allParticipants = [req.user.userId, ...participantIds];
@@ -300,7 +300,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/conversations/:id/messages', async (req: any, res) => {
+  app.get('/api/conversations/:id/messages', protectedMiddleware, async (req: any, res) => {
     try {
       const { id } = req.params;
       const messages = await storage.getMessagesByConversation(id, req.tenant.id);
@@ -311,7 +311,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/conversations/:id/messages', async (req: any, res) => {
+  app.post('/api/conversations/:id/messages', protectedMiddleware, async (req: any, res) => {
     try {
       const { id } = req.params;
       const messageData = insertMessageSchema.parse({
@@ -343,7 +343,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Assignments and Grades
-  app.get('/api/assignments', async (req: any, res) => {
+  app.get('/api/assignments', protectedMiddleware, async (req: any, res) => {
     try {
       const { classroomId } = req.query;
       
@@ -359,7 +359,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/students/:id/grades', async (req: any, res) => {
+  app.get('/api/students/:id/grades', protectedMiddleware, async (req: any, res) => {
     try {
       const { id } = req.params;
       const grades = await storage.getGradesByStudent(id, req.tenant.id);
@@ -371,7 +371,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Forms
-  app.get('/api/forms', async (req: any, res) => {
+  app.get('/api/forms', protectedMiddleware, async (req: any, res) => {
     try {
       const { status } = req.query;
       const forms = await storage.getFormRequests(req.tenant.id, status as string);
@@ -382,7 +382,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post('/api/forms', async (req: any, res) => {
+  app.post('/api/forms', protectedMiddleware, async (req: any, res) => {
     try {
       const formData = {
         ...req.body,
@@ -398,7 +398,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put('/api/forms/:id', async (req: any, res) => {
+  app.put('/api/forms/:id', protectedMiddleware, async (req: any, res) => {
     try {
       const { id } = req.params;
       const updateData = {
@@ -416,7 +416,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Users management
-  app.get('/api/users', async (req: any, res) => {
+  app.get('/api/users', protectedMiddleware, async (req: any, res) => {
     try {
       const { role } = req.query;
       

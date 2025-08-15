@@ -182,7 +182,7 @@ export default function Landing() {
             Ready to Transform Your School Communication?
           </h2>
           <p className="text-xl text-primary-100 mb-8">
-            Join thousands of schools already using SchoolConnect to improve parent engagement and streamline operations.
+            Join thousands of schools already using ESchool to improve parent engagement and streamline operations.
           </p>
           
           <Card className="max-w-md mx-auto">
@@ -222,7 +222,7 @@ export default function Landing() {
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
                   <GraduationCap className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold">SchoolConnect</span>
+                <span className="text-xl font-bold">ESchool</span>
               </div>
               <p className="text-gray-400">
                 Streamlining K-12 communication for modern education.
@@ -261,7 +261,7 @@ export default function Landing() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 SchoolConnect. All rights reserved.</p>
+            <p>&copy; 2024 ESchool. All rights reserved.</p>
           </div>
         </div>
       </footer>

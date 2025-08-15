@@ -81,7 +81,7 @@ export default function Login() {
             </div>
           </div>
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            Sign in to SchoolConnect
+            Sign in to ESchool
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             Access your school communication platform

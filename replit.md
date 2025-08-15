@@ -1,4 +1,4 @@
-# SchoolConnect Platform
+# ESchool Platform
 
 ## Overview
 

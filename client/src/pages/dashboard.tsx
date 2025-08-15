@@ -28,7 +28,7 @@ export default function Dashboard() {
       case 'parent':
         return `Hello, ${user.firstName}!`;
       default:
-        return "Welcome to SchoolConnect!";
+        return "Welcome to ESchool!";
     }
   };
 

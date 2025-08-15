@@ -64,7 +64,7 @@ export default function Navbar() {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
                 <GraduationCap className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">SchoolConnect</span>
+              <span className="text-xl font-bold text-gray-900">ESchool</span>
             </Link>
             <div className="flex items-center space-x-4">
               <Link href="/login">
@@ -86,7 +86,7 @@ export default function Navbar() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3">
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-gray-900">SchoolConnect</span>
+            <span className="text-xl font-bold text-gray-900">ESchool</span>
           </Link>
 
           {/* Desktop Navigation */}
